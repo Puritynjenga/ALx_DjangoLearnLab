@@ -28,19 +28,19 @@ class LibraryDetailView(DetailView):
         return Library.objects.prefetch_related('books')
     
 class registerView(CreateView):
-    form_class = UserCreationForm
+    form_class = UserCreationForm()
     success_url = reverse_lazy('signup')
-    template_name = 'registration/register.html'
+    template_name = 'relationship_app/register.html'
 
 class LoginView(CreateView):
-    form_class = UserCreationForm
+    form_class = UserCreationForm()
     success_url = reverse_lazy('login')
-    template_name = 'registration/login.html'
+    template_name = 'relationship_app/login.html'
 
 class LogoutView(CreateView):
-    form_class = UserCreationForm
+    form_class = UserCreationForm()
     success_url = reverse_lazy('logout')
-    template_name = 'registration/logout.html'   
+    template_name = 'relationship_app/logout.html'   
 
 
     
