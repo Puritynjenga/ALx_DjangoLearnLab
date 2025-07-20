@@ -4,10 +4,10 @@ from .models import Book
 from django.views.generic.detail import DetailView,ListView
 
 # Create your views here.
-def list_book(request):
+def list_books(request):
     books = Book.objects.all()
     context= {
-        'books_list': books,  
+        'list_books': books,  
     }
     return render(request, 'relationship_app/list_books.html', context)
 
