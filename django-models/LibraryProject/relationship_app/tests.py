@@ -6,7 +6,7 @@ class AuthenticationTestCase(TestCase):
     
     def test_user_can_register(self):
         """Test that users can register"""
-        response = self.client.post(reverse('signup'), {
+        response = self.client.post(reverse('register'), {
             'username': 'testuser',
             'password1': 'testpass123',
             'password2': 'testpass123'
