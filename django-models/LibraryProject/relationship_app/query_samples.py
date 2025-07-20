@@ -5,6 +5,7 @@ from django.db import models
 def get_books_by_author(author_name):
     try:
         author = Author.objects.get(name=author_name)
+        Author.objects.filter(author=author).select_related('books')
         return author.books.all()
     except Author.DoesNotExist:
         return None
@@ -13,6 +14,8 @@ def get_books_by_author(author_name):
 def get_books_in_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
+        Library.objects.filter(library=library).select_related('books')
+        # Retrieve all books in the library
         return library.books.all()
     except Library.DoesNotExist:
         return None
