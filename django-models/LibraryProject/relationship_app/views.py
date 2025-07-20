@@ -27,7 +27,7 @@ class LibraryDetailView(DetailView):
         #prefetch related books to avoid N+1 query problem
         return Library.objects.prefetch_related('books')
     
-class SignUpView(CreateView):
+class registerView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('signup')
     template_name = 'registration/register.html'
