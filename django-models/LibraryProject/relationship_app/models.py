@@ -2,6 +2,7 @@ from django.db import models
 
 
 
+
 class Author(models.Model):
     """Model representing an author."""         
     name = models.CharField(max_length=100)
@@ -33,3 +34,5 @@ class Librarian(models.Model):
     def __str__(self):
         return self.name        
      
+
+      

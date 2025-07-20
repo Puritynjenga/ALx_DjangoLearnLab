@@ -2,6 +2,9 @@ from django.shortcuts import render
 from .models import Library
 from .models import Book
 from django.views.generic.detail import DetailView,ListView
+from django.urls import reverse_lazy
+from django_backups import CreateView
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def list_books(request):
@@ -23,4 +26,21 @@ class LibraryDetailView(DetailView):
     def get_books_in_library(self):
         #prefetch related books to avoid N+1 query problem
         return Library.objects.prefetch_related('books')
+    
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('signup')
+    template_name = 'registration/register.html'
+
+class LoginView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/login.html'
+
+class LogoutView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('logout')
+    template_name = 'registration/logout.html'   
+    
+      
     
