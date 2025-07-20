@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from .models import Library
 from .models import Book
-from django.views.generic import DetailView
+from django.views.generic import DetailView,ListView
 
 # Create your views here.
-def book_list(request):
+def list_book(request):
     books = Book.objects.all()
     context= {
         'books_list': books,  
     }
     return render(request, 'relationship_app/list_books.html', context)
 
-class LibraryView(DetailView):
+class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
