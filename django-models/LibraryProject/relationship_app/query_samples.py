@@ -5,7 +5,7 @@ from django.db import models
 def get_books_by_author(author_name):
     try:
         author = Author.objects.get(name=author_name)
-        return Book.objects.filter(author=author)
+        return author.books.all()
     except Author.DoesNotExist:
         return None
     
@@ -13,7 +13,7 @@ def get_books_by_author(author_name):
 def get_books_in_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
-        return Book.objects.filter(library=library)
+        return library.books.all()
     except Library.DoesNotExist:
         return None
     #Retrieve the librarian for a library
