@@ -5,7 +5,7 @@ from django.views.generic.detail import DetailView,ListView
 from django.urls import reverse_lazy
 from django_backups import CreateView
 from django.contrib.auth.forms import UserCreationForm
-
+from django.contrib.auth import login, logout,signup
 # Create your views here.
 def list_books(request):
     books = Book.objects.all()
@@ -41,6 +41,6 @@ class LogoutView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('logout')
     template_name = 'registration/logout.html'   
-    
-      
+
+
     
