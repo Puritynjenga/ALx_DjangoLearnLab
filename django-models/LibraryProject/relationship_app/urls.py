@@ -14,7 +14,7 @@ urlpatterns = [
     path('librarian-dashboard/', views.librarian_view, name='librarian-dashboard'),
     path('member-dashboard/', views.member_view, name='member-dashboard'),
     path('add_book/', views.can_add_book, name='can_add_book'),
-    path('edit_book', views.can_change_book, name='can_change_book'),    
+    path('edit_book/', views.can_change_book, name='can_change_book'),    
     path('delete_book/', views.can_delete_book, name='can_delete_book'),
     path('accounts/', include('django.contrib.auth.urls')), 
     
