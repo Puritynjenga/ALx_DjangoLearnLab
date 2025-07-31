@@ -13,9 +13,9 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_view, name='admin-dashboard'),
     path('librarian-dashboard/', views.librarian_view, name='librarian-dashboard'),
     path('member-dashboard/', views.member_view, name='member-dashboard'),
-    path('can_add_book/', views.can_add_book, name='can_add_book'),
-    path('can_change_book/', views.can_change_book, name='can_change_book'),    
-    path('can_delete_book/', views.can_delete_book, name='can_delete_book'),
-    path('accounts/', include('django.contrib.auth.urls')),  # For login/logout
+    path('add_book/', views.can_add_book, name='can_add_book'),
+    path('edit_book', views.can_change_book, name='can_change_book'),    
+    path('delete_book/', views.can_delete_book, name='can_delete_book'),
+    path('accounts/', include('django.contrib.auth.urls')), 
     
 ]
