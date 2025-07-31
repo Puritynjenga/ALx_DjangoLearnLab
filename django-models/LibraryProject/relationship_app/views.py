@@ -6,7 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView as AuthLoginView, LogoutView as AuthLogoutView
-from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django .contrib.auth.models import User
 from django.contrib import messages
 # Create your views here.
