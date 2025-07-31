@@ -1,17 +1,232 @@
 <!-- register.html -->
-{% load static %} <!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Library Management System</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Register</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+    <div class="auth-container">
+        <!-- Header Section -->
+        <div class="auth-header">
+            <h1>Join Our Library</h1>
+            <p>Create your account to access thousands of books</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="auth-form">
+            <!-- Display Messages -->
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <strong>
+                                {% if message.tags == 'success' %}✓{% endif %}
+                                {% if message.tags == 'error' %}✗{% endif %}
+                                {% if message.tags == 'info' %}ℹ{% endif %}
+                            </strong>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Registration Form -->
+            <form method="post" enctype="multipart/form-data" id="registerForm">
+                {% csrf_token %}
+
+                <!-- Display Non-Field Errors -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <strong>✗</strong> {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Username Field -->
+                <div class="form-group {% if form.username.errors %}has-error{% endif %}">
+                    <label for="{{ form.username.id_for_label }}">
+                        <i class="icon-user"></i> Username *
+                    </label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="field-errors">
+                            {% for error in form.username.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.username.help_text %}
+                        <small class="help-text">{{ form.username.help_text }}</small>
+                    {% endif %}
+                </div>
+
+                <!-- Email Field -->
+                <div class="form-group {% if form.email.errors %}has-error{% endif %}">
+                    <label for="{{ form.email.id_for_label }}">
+                        <i class="icon-email"></i> Email Address *
+                    </label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="field-errors">
+                            {% for error in form.email.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <small class="help-text">We'll use this for account recovery and library notifications.</small>
+                </div>
+
+                <!-- Date of Birth Field -->
+                <div class="form-group {% if form.date_of_birth.errors %}has-error{% endif %}">
+                    <label for="{{ form.date_of_birth.id_for_label }}">
+                        <i class="icon-calendar"></i> Date of Birth
+                    </label>
+                    {{ form.date_of_birth }}
+                    {% if form.date_of_birth.errors %}
+                        <div class="field-errors">
+                            {% for error in form.date_of_birth.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <small class="help-text">Optional. Used for age-appropriate book recommendations.</small>
+                </div>
+
+                <!-- Profile Photo Field -->
+                <div class="form-group {% if form.profile_photo.errors %}has-error{% endif %}">
+                    <label for="{{ form.profile_photo.id_for_label }}">
+                        <i class="icon-image"></i> Profile Photo
+                    </label>
+                    {{ form.profile_photo }}
+                    {% if form.profile_photo.errors %}
+                        <div class="field-errors">
+                            {% for error in form.profile_photo.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <small class="help-text">Optional. Upload a profile picture (JPG, PNG, max 5MB).</small>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group {% if form.password1.errors %}has-error{% endif %}">
+                    <label for="{{ form.password1.id_for_label }}">
+                        <i class="icon-lock"></i> Password *
+                    </label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <div class="field-errors">
+                            {% for error in form.password1.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.password1.help_text %}
+                        <small class="help-text">{{ form.password1.help_text }}</small>
+                    {% endif %}
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="form-group {% if form.password2.errors %}has-error{% endif %}">
+                    <label for="{{ form.password2.id_for_label }}">
+                        <i class="icon-lock"></i> Confirm Password *
+                    </label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <div class="field-errors">
+                            {% for error in form.password2.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.password2.help_text %}
+                        <small class="help-text">{{ form.password2.help_text }}</small>
+                    {% endif %}
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Auth Links -->
+            <div class="auth-links">
+                <p>Already have an account? <a href="{% url 'login' %}">Sign in here</a></p>
+                <p><a href="{% url 'list_books' %}">← Back to Library</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for enhanced UX -->
+    <script>
+        // Add loading state to form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.textContent = 'Creating Account...';
+            submitBtn.disabled = true;
+        });
+
+        // Password strength indicator
+        const password1 = document.querySelector('input[name="password1"]');
+        const password2 = document.querySelector('input[name="password2"]');
+
+        if (password1) {
+            password1.addEventListener('input', function() {
+                const strength = getPasswordStrength(this.value);
+                // You can add password strength indicator here
+            });
+        }
+
+        // Password match validation
+        if (password2) {
+            password2.addEventListener('input', function() {
+                if (password1.value && this.value) {
+                    if (password1.value !== this.value) {
+                        this.setCustomValidity('Passwords do not match');
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                }
+            });
+        }
+
+        // File upload preview (optional)
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) {
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    // You can add image preview functionality here
+                    console.log('Image selected:', file.name);
+                }
+            });
+        }
+
+        // Helper function for password strength
+        function getPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            return strength;
+        }
+
+        // Auto-focus first input field
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstInput = document.querySelector('input');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        });
+    </script>
 </body>
 </html>

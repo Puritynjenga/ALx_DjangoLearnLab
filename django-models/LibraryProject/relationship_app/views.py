@@ -10,7 +10,25 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django .contrib.auth.models import User
 from django.contrib import messages
-# Create your views here.
+from .forms import CustomUserCreationForm
+
+def register_view(request):
+    """Updated registration view using custom user form."""
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registration successful!')
+            return redirect('list_books')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = CustomUserCreationForm()
+    
+    return render(request, 'relationship_app/register.html', {'form': form})
+
+
 def list_books(request):
     books = Book.objects.all()
     context= {
@@ -23,10 +41,6 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['books'] = self.object.books.all()
-    #     return context
     def get_books_in_library(self):
         #prefetch related books to avoid N+1 query problem
         return Library.objects.prefetch_related('books')

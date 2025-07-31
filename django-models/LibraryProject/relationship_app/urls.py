@@ -17,5 +17,7 @@ urlpatterns = [
     path('edit_book/', views.can_change_book, name='can_change_book'),    
     path('delete_book/', views.can_delete_book, name='can_delete_book'),
     path('accounts/', include('django.contrib.auth.urls')), 
-    
+    path('register/', views.register_view, name='register'),
+
+
 ]
