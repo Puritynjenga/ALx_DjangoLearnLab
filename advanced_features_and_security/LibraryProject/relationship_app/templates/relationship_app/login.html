@@ -1,18 +1,118 @@
-<!-- login.html -->
-{% load static %} <!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Library Management System</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'register' %}">Register</a>
+    <div class="auth-container">
+        <!-- Header Section -->
+        <div class="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Sign in to your library account</p>
+        </div>
+
+        <!-- Form Section -->
+        <div class="auth-form">
+            <!-- Display Messages -->
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <strong>
+                                {% if message.tags == 'success' %}✓{% endif %}
+                                {% if message.tags == 'error' %}✗{% endif %}
+                                {% if message.tags == 'info' %}ℹ{% endif %}
+                            </strong>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Login Form -->
+            <form method="post" id="loginForm">
+                {% csrf_token %}
+
+                <!-- Display Non-Field Errors -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <strong>✗</strong> {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Username Field -->
+                <div class="form-group {% if form.username.errors %}has-error{% endif %}">
+                    <label for="{{ form.username.id_for_label }}">
+                        <i class="icon-user"></i> Username
+                    </label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="field-errors">
+                            {% for error in form.username.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.username.help_text %}
+                        <small class="help-text">{{ form.username.help_text }}</small>
+                    {% endif %}
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group {% if form.password.errors %}has-error{% endif %}">
+                    <label for="{{ form.password.id_for_label }}">
+                        <i class="icon-lock"></i> Password
+                    </label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="field-errors">
+                            {% for error in form.password.errors %}
+                                <small class="error-text">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.password.help_text %}
+                        <small class="help-text">{{ form.password.help_text }}</small>
+                    {% endif %}
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-primary">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Auth Links -->
+            <div class="auth-links">
+                <p>Don't have an account? <a href="{% url 'register' %}">Create one here</a></p>
+                <p><a href="{% url 'list_books' %}">← Back to Library</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript for enhanced UX -->
+    <script>
+        // Add loading state to form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.textContent = 'Signing In...';
+            submitBtn.disabled = true;
+        });
+
+        // Auto-focus first input field
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstInput = document.querySelector('input');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        });
+    </script>
 </body>
 </html>

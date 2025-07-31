@@ -2,6 +2,12 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.contrib.auth.models import BaseUserManager
+
+def get_user_model():
+    """Return the custom user model."""
+    from relationship_app.models import User
+    return User
 
 
 def main():
