@@ -32,5 +32,8 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'published_date')
     search_fields = ('title', 'author')
     list_filter = ('published_date',)
+
+
+
 admin.site.register(Book)
-admin.site.register(CustomUser,CustomUserAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
