@@ -5,7 +5,7 @@ from .models import CustomUser, Book, Library, Author, Librarian, UserProfile
 
 class CustomModelAdmin(UserAdmin):
     """Custom admin configuration for the User model."""
-    model = User
+    model = CustomUser
     list_display = ['username', 'email','is_staff', 'is_superuser', 'is_active', 'date_of_birth', 'profile_photo']
     list_filter = ['is_staff', 'is_superuser', 'is_active']
     fieldsets = UserAdmin.fieldsets + (
@@ -28,7 +28,7 @@ class CustomModelAdmin(UserAdmin):
     search_fields = ['username', 'email', 'first_name', 'last_name']
     ordering = ['username']
 
-admin.site.register(User, CustomModelAdmin)
+admin.site.register(CustomUser,CustomModelAdmin)
 admin.site.register(Book)
 admin.site.register(Library)
 admin.site.register(Author)

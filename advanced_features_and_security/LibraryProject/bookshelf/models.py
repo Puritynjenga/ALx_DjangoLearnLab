@@ -5,10 +5,16 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField()
-  
 
-    def __str__(self):
-        return self.title
+    class Meta:
+        permissions = [
+            ('can_view', 'Can view book'),       # Permission for viewing books
+            ('can_create', 'Can create book'),   # Permission for creating books  
+            ('can_edit', 'Can edit book'),       # Permission for editing books
+            ('can_delete', 'Can delete book'),
+            ]
+
+
     
 class CustomUserManager(BaseUserManager):
     """Custom user manager for the User model."""
