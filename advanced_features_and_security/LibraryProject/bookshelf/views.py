@@ -3,6 +3,7 @@ from .models import Book
 from django.contrib.auth.decorators import login_required, permission_required
 import re
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import ExampleForm
 # Create your views here.
 """View to list all books."""
 @login_required
